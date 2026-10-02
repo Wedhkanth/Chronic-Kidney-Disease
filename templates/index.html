@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKD Prediction | AI Diagnostic System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar animate-fade-in">
+    <a href="/" class="active">Home</a>
+    <a href="/predict">Predict CKD</a>
+    <a href="/feature-selection">Feature Selection</a>
+    <a href="/about">About System</a>
+</nav>
+
+<main class="card animate-fade-in" style="margin-top: 80px;">
+    <h1>Chronic Kidney Disease Prediction</h1>
+    
+    <p class="subtitle" style="font-size: 18px; color: var(--text-primary);">
+        Advanced AI diagnostic system leveraging clinical biomarkers to detect kidney disease risk with high accuracy.
+    </p>
+
+    <p style="margin-bottom: 40px;">
+        This platform employs a sophisticated pipeline including <strong>4 advanced feature selection methods</strong> 
+        (Mutual Information, Chi-Squared, ANOVA F-test, RFE) to isolate the most critical biomarkers. 
+        It integrates modern gradient boosting algorithms (<strong>LightGBM</strong> and <strong>CatBoost</strong>) 
+        and provides transparent, interpretable outcomes via <strong>SHAP explainability</strong>.
+    </p>
+
+    <div class="btn-container">
+        <a href="/predict" class="app-btn">Start Prediction</a>
+        <a href="/feature-selection" class="app-btn btn-secondary">View Analysis</a>
+    </div>
+</main>
+
+</body>
+</html>

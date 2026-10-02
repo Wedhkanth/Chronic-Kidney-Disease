@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict | CKD System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar animate-fade-in">
+    <a href="/">Home</a>
+    <a href="/predict" class="active">Predict CKD</a>
+    <a href="/feature-selection">Feature Selection</a>
+    <a href="/about">About System</a>
+</nav>
+
+<main class="card wide animate-fade-in">
+    <h1>Diagnostic Data Input</h1>
+
+    <p class="subtitle" style="text-align: center; margin-bottom: 40px;">
+        Provide the necessary biomarker readings below to initialize the predictive engine.
+        {% if 'egfr' in features %}
+        <br><strong style="color: var(--primary-light);">eGFR parameter will be uniquely synthesized from Age & Serum Creatinine variables.</strong>
+        {% endif %}
+    </p>
+
+    <form method="POST" action="/predict">
+        <div class="form-grid">
+            {% if input_fields %}
+                {% for field in input_fields %}
+                <div class="input-group">
+                    <label for="{{ field }}">{{ field_labels[field] }}</label>
+                    <input type="text" name="{{ field }}" id="{{ field }}" placeholder="Enter {{ field_labels[field] }}..." required>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="input-group">
+                    <label>Age</label>
+                    <input name="age" placeholder="Enter Age..." required>
+                </div>
+                <div class="input-group">
+                    <label>Blood Pressure</label>
+                    <input name="bp" placeholder="Enter Blood Pressure..." required>
+                </div>
+                <div class="input-group">
+                    <label>Specific Gravity</label>
+                    <input name="sg" placeholder="Enter Specific Gravity..." required>
+                </div>
+                <div class="input-group">
+                    <label>Albumin</label>
+                    <input name="al" placeholder="Enter Albumin..." required>
+                </div>
+                <div class="input-group">
+                    <label>Sugar</label>
+                    <input name="su" placeholder="Enter Sugar..." required>
+                </div>
+                <div class="input-group">
+                    <label>Serum Creatinine</label>
+                    <input name="sc" placeholder="Enter Serum Creatinine..." required>
+                </div>
+                <div class="input-group">
+                    <label>Sodium</label>
+                    <input name="sod" placeholder="Enter Sodium..." required>
+                </div>
+                <div class="input-group">
+                    <label>Potassium</label>
+                    <input name="pot" placeholder="Enter Potassium..." required>
+                </div>
+            {% endif %}
+        </div>
+
+        <div style="text-align: center; margin-top: 20px; width: 100%;">
+            <button type="submit">Run Prediction Analysis</button>
+        </div>
+    </form>
+
+    {% if prediction %}
+    <div class="result {{ 'danger' if 'CKD Detected' == prediction else 'safe' }}">
+        <h2>{{ prediction }}</h2>
+        {% if egfr %}
+        <p style="font-size: 18px; margin: 15px 0;">Calculated eGFR: <strong>{{ egfr }}</strong> mL/min/1.73m²</p>
+        {% endif %}
+
+        {% if shap_img %}
+        <div style="margin-top: 35px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;">
+            <h3>SHAP Diagnostic Interpretation</h3>
+            <p class="shap-desc">Granular breakdown of positive/negative force impacts by biomarker array.</p>
+            <img src="/{{ shap_img }}" alt="SHAP Clinical Force Plot">
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error">
+        <p style="margin: 0;">⚠️ System Error: {{ error }}</p>
+    </div>
+    {% endif %}
+</main>
+
+</body>
+</html>

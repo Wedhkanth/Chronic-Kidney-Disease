@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | CKD Prediction System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar animate-fade-in">
+    <a href="/">Home</a>
+    <a href="/predict">Predict CKD</a>
+    <a href="/feature-selection">Feature Selection</a>
+    <a href="/about" class="active">About System</a>
+</nav>
+
+<main class="card wide animate-fade-in">
+    <h1>About This System</h1>
+
+    <p style="text-align: center; max-width: 800px; margin: 0 auto 40px auto; font-size: 17px;">
+        This platform represents an advanced AI-based <strong>Chronic Kidney Disease (CKD)</strong> prediction engine.
+        It leverages state-of-the-art gradient boosting algorithms—<strong>LightGBM</strong> and <strong>CatBoost</strong>—to analyze complex clinical biomarkers effectively and generate highly accurate diagnostics.
+    </p>
+
+    <h2>📋 Diagnostic Pipeline</h2>
+    <div class="pipeline">
+        <div class="pipeline-step">
+            <span class="step-num">1</span>
+            <strong>Data Processing</strong>
+            <p>Cleaning formatting, imputation, and target coding.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+            <span class="step-num">2</span>
+            <strong>eGFR Engine</strong>
+            <p>Compute Glomerular Filtration Rate via the CKD-EPI equation.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+            <span class="step-num">3</span>
+            <strong>Feature Extraction</strong>
+            <p>Normalize and extract key clinical biomarker variables.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+            <span class="step-num">4</span>
+            <strong>Consensus Selection</strong>
+            <p>Filter features with Mutual Info, Chi², ANOVA, and LGBM RFE.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+            <span class="step-num">5</span>
+            <strong>Model Training</strong>
+            <p>Train LightGBM & CatBoost on the refined optimal dataset.</p>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">
+            <span class="step-num">6</span>
+            <strong>SHAP Explainability</strong>
+            <p>Deconstruct outputs for full clinical transparency via SHAP.</p>
+        </div>
+    </div>
+
+    <h2>🔬 Feature Engineering Methods</h2>
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Category</th>
+                <th>Analytical Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mutual Information</td>
+                <td>Filter</td>
+                <td>Identifies complex non-linear interdependencies between biomarkers and the diagnosis curve.</td>
+            </tr>
+            <tr>
+                <td>Chi-Squared (χ²)</td>
+                <td>Filter</td>
+                <td>Statistical validation measuring independence strength to rank the relative value of features.</td>
+            </tr>
+            <tr>
+                <td>ANOVA F-test</td>
+                <td>Filter</td>
+                <td>Variance analysis testing linear independence between categorical and numerical vectors.</td>
+            </tr>
+            <tr>
+                <td>Recursive Selection (RFE)</td>
+                <td>Wrapper</td>
+                <td>Model-driven elimination using LightGBM feature importance matrices iteratively.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="background: rgba(0,0,0,0.2); padding: 30px; border-radius: 16px; margin-top: 40px; border: 1px solid var(--card-border);">
+        <h2 style="margin-top: 0;">System Highlights</h2>
+        <ul style="margin-bottom: 0;">
+            <li><strong>Automated Feature Selection</strong> via 4 unique consensus thresholds.</li>
+            <li><strong>Native eGFR Extrapolation</strong> derived purely from routine metrics.</li>
+            <li><strong>High-Speed Estimators</strong> powered by LightGBM & CatBoost logic engines.</li>
+            <li><strong>Deep Explanatory Architecture</strong> rendering precise SHAP contributions.</li>
+            <li><strong>Responsive Diagnostics Layout</strong> adapting interface layers per feature load.</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>

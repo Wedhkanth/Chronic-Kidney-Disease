@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Selection | CKD System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar animate-fade-in">
+    <a href="/">Home</a>
+    <a href="/predict">Predict CKD</a>
+    <a href="/feature-selection" class="active">Feature Selection</a>
+    <a href="/about">About System</a>
+</nav>
+
+<main class="card wide animate-fade-in">
+    <h1>Feature Selection Results</h1>
+
+    <p style="text-align: center; max-width: 800px; margin: 0 auto; color: var(--text-secondary); font-size: 17px;">
+        To optimize predictive performance and eliminate noise, our engine aggregates 
+        <strong>4 feature selection paradigms</strong>. Biomarkers cross-verified by 
+        <strong style="color: var(--primary-light);">≥3 algorithms</strong> are assimilated into the final consensus training matrix.
+    </p>
+
+    <!-- Methods Grid -->
+    <div class="methods-grid">
+        <div class="method-card">
+            <h3><span>🧬</span> Mutual Information</h3>
+            <p>Computes non-linear statistical dependencies mapping distinct biomarker variations against target disease states.</p>
+            {% if rankings and rankings.selections %}
+            <ul>
+                {% for f in rankings.selections['Mutual Information'] %}
+                <li><strong>{{ f }}</strong></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="method-card">
+            <h3><span>📐</span> Chi-Squared (χ²)</h3>
+            <p>Runs hypothesis independence tests, capturing absolute correlations between non-negative parametric distributions.</p>
+            {% if rankings and rankings.selections %}
+            <ul>
+                {% for f in rankings.selections['Chi-Squared'] %}
+                <li><strong>{{ f }}</strong></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="method-card">
+            <h3><span>📊</span> ANOVA F-test</h3>
+            <p>Employs variance analysis equations isolating significant continuous variables from categorical diagnosis boundaries.</p>
+            {% if rankings and rankings.selections %}
+            <ul>
+                {% for f in rankings.selections['ANOVA F-test'] %}
+                <li><strong>{{ f }}</strong></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="method-card">
+            <h3><span>🔄</span> LGBM RFE</h3>
+            <p>Iteratively discards subordinate features through intrinsic LightGBM split-matrix importance tracking.</p>
+            {% if rankings and rankings.selections %}
+            <ul>
+                {% for f in rankings.selections['RFE'] %}
+                <li><strong>{{ f }}</strong></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Consensus Tag Box -->
+    <div class="consensus-box animate-fade-in" style="animation-delay: 0.3s;">
+        <h2>🏆 Active Consensus Matrix</h2>
+        <p style="color: rgba(255,255,255,0.7); margin-bottom: 25px;">Biomarkers validated across multiple paradigms:</p>
+        <div class="feature-tags">
+            {% for f in features %}
+            <span class="tag">{{ f }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Comparison Heatmap -->
+    {% if has_chart %}
+    <div class="chart-section" style="margin-top: 50px;">
+        <h2 style="text-align: center; margin-bottom: 15px;">Comparison Matrix Render</h2>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
+            A green active cell signifies selection by relative algorithm. Dark-highlighted anchors imply consensus verification.
+        </p>
+        <div style="display: flex; justify-content: center;">
+            <img src="{{ url_for('static', filename='feature_selection_comparison.png') }}" alt="Feature Selection Comparison Heatmap" style="max-width: 800px; width: 100%;">
+        </div>
+    </div>
+    {% endif %}
+</main>
+
+</body>
+</html>
